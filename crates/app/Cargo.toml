@@ -36,3 +36,19 @@ js-sys = "0.3"
 base64 = "0.22"
 png = "0.18"
 embed-resource = "3"
+
+# Linux .deb package (built in CI with `cargo deb -p fetchly --no-build`).
+[package.metadata.deb]
+name = "fetchly"
+maintainer = "Akshay Bhat <https://akshaybhat.online>"
+copyright = "2026, Akshay Bhat"
+license-file = ["../../LICENSE", "0"]
+extended-description = "Fetchly is a fast, private, open-source API client. Build and send HTTP requests, organise them in collections, use environments and variables, write tests, and run whole collections. No account required; your data stays on your machine."
+section = "devel"
+priority = "optional"
+depends = "$auto"
+assets = [
+  ["target/release/fetchly", "usr/bin/", "755"],
+  ["../../assets/linux/fetchly.desktop", "usr/share/applications/", "644"],
+  ["../../assets/linux/fetchly.png", "usr/share/icons/hicolor/512x512/apps/", "644"],
+]

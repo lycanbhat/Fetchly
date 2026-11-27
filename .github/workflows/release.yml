@@ -1,0 +1,120 @@
+name: release
+
+# Push a version tag (e.g. `git tag v0.1.0 && git push origin v0.1.0`) to build
+# macOS, Windows and Linux packages and publish them as a GitHub Release.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to (re)build and publish, e.g. v0.1.0"
+        required: true
+
+permissions:
+  contents: write
+
+env:
+  CARGO_TERM_COLOR: always
+  TAG: ${{ github.event.inputs.tag || github.ref_name }}
+
+jobs:
+  macos:
+    name: macOS (universal .dmg)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin,x86_64-apple-darwin
+      - uses: Swatinem/rust-cache@v2
+      - run: ./scripts/bundle-macos.sh universal
+      - run: mv target/macos/Fetchly-*.dmg "target/macos/Fetchly-${TAG#v}-macos-universal.dmg"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos
+          path: target/macos/*.dmg
+
+  windows:
+    name: Windows (installer + portable)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-pc-windows-gnu
+      - uses: Swatinem/rust-cache@v2
+      - run: sudo apt-get update && sudo apt-get install -y mingw-w64 nsis zip
+      - run: ./scripts/build-windows.sh
+      - name: Name files by platform
+        run: |
+          V="${TAG#v}"
+          mv target/windows/Fetchly-Setup-*.exe "target/windows/Fetchly-${V}-windows-x64-setup.exe"
+          mv target/windows/Fetchly-*-portable.zip "target/windows/Fetchly-${V}-windows-x64-portable.zip"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: target/windows/*
+
+  linux:
+    name: Linux (.deb + .tar.gz)
+    # Built on the oldest supported Ubuntu so the binary runs on older glibc versions too.
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev libxdo-dev libayatana-appindicator3-dev librsvg2-dev
+      - run: cargo build --release -p fetchly
+      - name: Package .tar.gz
+        run: |
+          V="${TAG#v}"
+          D="Fetchly-${V}-linux-x86_64"
+          mkdir -p "dist/$D"
+          cp target/release/fetchly "dist/$D/"
+          cp assets/linux/fetchly.desktop assets/linux/fetchly.png assets/linux/install.sh LICENSE "dist/$D/"
+          tar -C dist -czf "dist/$D.tar.gz" "$D"
+      - name: Package .deb
+        run: |
+          cargo install cargo-deb --locked
+          cargo deb -p fetchly --no-build --output "dist/fetchly_${TAG#v}_amd64.deb"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux
+          path: |
+            dist/*.tar.gz
+            dist/*.deb
+
+  publish:
+    name: Publish GitHub Release
+    needs: [macos, windows, linux]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Checksums
+        run: cd dist && sha256sum * > SHA256SUMS.txt && cat SHA256SUMS.txt
+      - name: Create or update the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sed "s/{{VERSION}}/${TAG#v}/g" .github/release-notes.md > notes.md
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" dist/* --clobber
+            gh release edit "$TAG" --notes-file notes.md
+          else
+            gh release create "$TAG" dist/* --title "Fetchly ${TAG#v}" --notes-file notes.md --latest
+          fi

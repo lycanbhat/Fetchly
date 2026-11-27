@@ -186,14 +186,15 @@ Generate ready-to-run snippets for the current request, with variables resolved:
 
 ## Install
 
-Ready-made installers are produced by the build scripts below:
+**[⬇ Download the latest release](https://github.com/lycanbhat/Fetchly/releases/latest)** — ready-made builds for every platform:
 
 | Platform | File | Notes |
 |---|---|---|
-| macOS 11+ (Apple Silicon & Intel) | `Fetchly-<version>.dmg` | Open it and drag **Fetchly** to **Applications**. |
-| Windows 10 / 11 (x64) | `Fetchly-Setup-<version>.exe` | Installs for the current user, no admin rights needed. Adds Start menu and desktop shortcuts and an uninstaller. |
-| Windows, no install | `Fetchly-<version>-portable.zip` | Unzip and run `Fetchly.exe`. Keep `WebView2Loader.dll` next to it. |
-| Linux (x64) | `fetchly` binary | See [Linux](#linux). |
+| macOS 11+ (Apple Silicon & Intel) | `Fetchly-<version>-macos-universal.dmg` | Open it and drag **Fetchly** to **Applications**. |
+| Windows 10 / 11 (x64) | `Fetchly-<version>-windows-x64-setup.exe` | Installs for the current user, no admin rights needed. Adds Start menu and desktop shortcuts and an uninstaller. |
+| Windows, no install | `Fetchly-<version>-windows-x64-portable.zip` | Unzip and run `Fetchly.exe`. Keep `WebView2Loader.dll` next to it. |
+| Linux — Debian / Ubuntu (x64) | `fetchly_<version>_amd64.deb` | `sudo apt install ./fetchly_<version>_amd64.deb` |
+| Linux — other distributions (x64) | `Fetchly-<version>-linux-x86_64.tar.gz` | Extract and run `./install.sh` (installs to `~/.local`, no root). Needs the WebKitGTK 4.1 runtime. |
 
 **First launch warnings.** The builds are not code-signed, so the OS asks for confirmation the first time:
 
@@ -469,7 +470,11 @@ dx serve --platform web -p fetchly           # web app with live rebuilds
 cargo check -p fetchly --target wasm32-unknown-unknown --no-default-features --features web
 ```
 
-`.github/workflows/build.yml` defines CI that runs the tests and builds Linux, macOS (Apple Silicon and Intel), Windows and web artifacts on every push.
+`.github/workflows/build.yml` runs the tests and builds every platform on each push. `.github/workflows/release.yml` publishes a GitHub Release with macOS, Windows and Linux packages whenever a version tag is pushed:
+
+```sh
+git tag v0.1.1 && git push origin v0.1.1
+```
 
 ## Credits and license
 

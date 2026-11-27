@@ -15,7 +15,7 @@ VERSION=$(grep -m1 '^version' Cargo.toml | cut -d'"' -f2)
 OUT=target/windows
 
 for tool in x86_64-w64-mingw32-gcc makensis; do
-  command -v "$tool" >/dev/null || { echo "Missing $tool — run: brew install mingw-w64 makensis"; exit 1; }
+  command -v "$tool" >/dev/null || { echo "Missing $tool — install mingw-w64 and NSIS (macOS: brew install mingw-w64 makensis; Debian/Ubuntu: apt install mingw-w64 nsis)"; exit 1; }
 done
 rustup target add "$TARGET" >/dev/null
 
