@@ -24,7 +24,7 @@
   const OS = {
     mac: { name: "macOS", icon: "apple", asset: "macos-universal.dmg", sub: "Universal · Apple Silicon & Intel · macOS 11+", hint: "First launch: right-click Fetchly → Open (builds aren't notarized yet)." },
     windows: { name: "Windows", icon: "windows", asset: "windows-x64-setup.exe", sub: "Installer · Windows 10 & 11 · x64", hint: "If SmartScreen appears: More info → Run anyway." },
-    linux: { name: "Linux", icon: "terminal", asset: "_amd64.deb", sub: "Debian / Ubuntu .deb · x86_64", hint: "Other distros: grab the .tar.gz and run ./install.sh." },
+    linux: { name: "Linux", icon: "linux", asset: "_amd64.deb", sub: "Debian / Ubuntu .deb · x86_64", hint: "Other distros: grab the .tar.gz and run ./install.sh." },
   };
   const os = detectOS();
   const info = OS[os];
