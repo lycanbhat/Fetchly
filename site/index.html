@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fetchly — a fast, private, open-source API client</title>
+  <meta name="description" content="Fetchly is a fast, private, open-source API client for macOS, Windows, Linux and the web. No account, no cloud — your requests, environments and cookies stay on your machine.">
+  <meta name="theme-color" content="#09090b">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Fetchly — a fast, private, open-source API client">
+  <meta property="og:description" content="No account. No cloud. Native on macOS, Windows and Linux. Imports your Postman collections.">
+  <meta property="og:image" content="https://lycanbhat.github.io/Fetchly/assets/img/social-card.png">
+  <meta property="og:url" content="https://lycanbhat.github.io/Fetchly/">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preload" href="assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><symbol id="i-send" viewBox="0 0 24 24"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol><symbol id="i-wifi-off" viewBox="0 0 24 24"><path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="M2 8.82a15 15 0 0 1 4.177-2.643"/><path d="M22 8.82a15 15 0 0 0-11.288-3.764"/><path d="m2 2 20 20"/></symbol><symbol id="i-package" viewBox="0 0 24 24"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><polyline points="3.29 7 12 12 20.71 7"/><path d="m7.5 4.27 9 5.15"/></symbol><symbol id="i-infinity" viewBox="0 0 24 24"><path d="M6 16c5 0 7-8 12-8a4 4 0 0 1 0 8c-5 0-7-8-12-8a4 4 0 1 0 0 8"/></symbol><symbol id="i-github" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></symbol><symbol id="i-apple" viewBox="0 0 24 24"><path d="M12 6.528V3a1 1 0 0 1 1-1h0"/><path d="M18.237 21A15 15 0 0 0 22 11a6 6 0 0 0-10-4.472A6 6 0 0 0 2 11a15.1 15.1 0 0 0 3.763 10 3 3 0 0 0 3.648.648 5.5 5.5 0 0 1 5.178 0A3 3 0 0 0 18.237 21"/></symbol><symbol id="i-monitor" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></symbol><symbol id="i-terminal" viewBox="0 0 24 24"><path d="m7 11 2-2-2-2"/><path d="M11 13h4"/><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/></symbol><symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></symbol><symbol id="i-library" viewBox="0 0 24 24"><rect width="8" height="18" x="3" y="3" rx="1"/><path d="M7 3v18"/><path d="M20.4 18.9c.2.5-.1 1.1-.6 1.3l-1.9.7c-.5.2-1.1-.1-1.3-.6L11.1 5.1c-.2-.5.1-1.1.6-1.3l1.9-.7c.5-.2 1.1.1 1.3.6Z"/></symbol><symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></symbol><symbol id="i-braces" viewBox="0 0 24 24"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></symbol><symbol id="i-cookie" viewBox="0 0 24 24"><path d="M11 17h.01"/><path d="M11.496 2c.324-.016.558.292.529.615a4 4 0 004.235 4.368.713.713 0 01.758.757 4 4 0 004.366 4.237c.323-.03.63.204.614.527a10 10 0 01-2.915 6.566A1 1 0 114.93 4.918 10 10 0 0111.496 2"/><path d="M12 12h.01"/><path d="M16 16h.01"/><path d="M16 3h.01"/><path d="M21 4h.01"/><path d="M21 8h.01"/><path d="M7 14h.01"/><path d="M9 8h.01"/></symbol><symbol id="i-code" viewBox="0 0 24 24"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></symbol><symbol id="i-import" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M8 5H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4"/></symbol><symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></symbol><symbol id="i-history" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol><symbol id="i-zap" viewBox="0 0 24 24"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol><symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol><symbol id="i-folder" viewBox="0 0 24 24"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></symbol><symbol id="i-flask" viewBox="0 0 24 24"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"/><path d="M6.453 15h11.094"/><path d="M8.5 2h7"/></symbol><symbol id="i-key" viewBox="0 0 24 24"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></symbol><symbol id="i-git-merge" viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></symbol><symbol id="i-feather" viewBox="0 0 24 24"><path d="M14.086 18.412A2 2 0 0112.67 19H5v-7.672a2 2 0 01.586-1.414L11.75 3.75a6 6 0 118.49 8.49z"/><path d="M16 8 2 22"/><path d="M17.488 15H9"/></symbol><symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></symbol><symbol id="i-file-json" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 12a1 1 0 0 0-1 1v1a1 1 0 0 1-1 1 1 1 0 0 1 1 1v1a1 1 0 0 0 1 1"/><path d="M14 18a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1 1 1 0 0 1-1-1v-1a1 1 0 0 0-1-1"/></symbol><symbol id="i-external" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol><symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol><symbol id="i-user-x" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="17" x2="22" y1="8" y2="13"/><line x1="22" x2="17" y1="8" y2="13"/></symbol><symbol id="i-server" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></symbol><symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol><symbol id="i-circle-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></symbol><symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol></svg>
+
+<header class="nav" id="top">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top" aria-label="Fetchly home">
+      <img src="assets/img/mark-128.png" alt="" width="28" height="28">
+      <span>Fetchly</span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#features">Features</a>
+      <a href="#compare">Compare</a>
+      <a href="#download">Download</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn ghost sm" href="https://github.com/lycanbhat/Fetchly" target="_blank" rel="noopener">
+        <svg class="i"><use href="#i-github"/></svg><span>GitHub</span>
+      </a>
+      <a class="btn primary sm" href="#download" data-dl-short>
+        <svg class="i"><use href="#i-download"/></svg><span>Download</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ======================================================== HERO -->
+  <section class="hero">
+    <div class="glow g1"></div><div class="glow g2"></div>
+    <div class="wrap hero-inner">
+      <a class="pill" href="https://github.com/lycanbhat/Fetchly/releases/latest" target="_blank" rel="noopener">
+        <span class="pill-dot"></span><span data-version>Latest release</span> is out
+        <svg class="i"><use href="#i-arrow-right"/></svg>
+      </a>
+      <h1>The API client that<br><span class="grad">stays out of your way.</span></h1>
+      <p class="lead">Fetchly is a fast, private, open-source API client. Build requests, test them and run whole collections — no account, no cloud, no limits. Your data never leaves your machine.</p>
+
+      <div class="hero-actions">
+        <a class="btn primary lg" id="hero-download" href="https://github.com/lycanbhat/Fetchly/releases/latest">
+          <svg class="i" id="hero-os-icon"><use href="#i-download"/></svg>
+          <span id="hero-download-label">Download Fetchly</span>
+        </a>
+        <a class="btn ghost lg" href="#download">Other platforms</a>
+      </div>
+      <p class="hero-meta" id="hero-meta">Free &amp; open source · macOS · Windows · Linux · Web</p>
+
+      <div class="hero-shot">
+        <div class="window">
+          <video id="demo" src="assets/fetchly-demo.mp4" poster="assets/img/video-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="Fetchly product demo"></video>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== VALUE PROPS -->
+  <section class="props">
+    <div class="wrap props-grid">
+      <div class="prop"><svg class="i"><use href="#i-user-x"/></svg><div><b>No account</b><span>Open it and send a request.</span></div></div>
+      <div class="prop"><svg class="i"><use href="#i-lock"/></svg><div><b>Private by design</b><span>Data stays on your machine.</span></div></div>
+      <div class="prop"><svg class="i"><use href="#i-gauge"/></svg><div><b>Tiny &amp; fast</b><span>~15 MB macOS, ~5 MB Windows.</span></div></div>
+      <div class="prop"><svg class="i"><use href="#i-wifi-off"/></svg><div><b>Works offline</b><span>No cloud dependency.</span></div></div>
+      <div class="prop"><svg class="i"><use href="#i-infinity"/></svg><div><b>No limits</b><span>Run collections all day.</span></div></div>
+    </div>
+  </section>
+
+  <!-- ======================================================== FEATURE SHOWCASE -->
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Features</span>
+        <h2>Everything you need from an API client. Nothing you don't.</h2>
+        <p>Fetchly covers the daily work of building, testing and organising API requests — in a native app that opens instantly.</p>
+      </div>
+
+      <div class="showcase">
+        <div class="showcase-text">
+          <span class="tag"><svg class="i"><use href="#i-send"/></svg>Requests &amp; responses</span>
+          <h3>Send a request. See everything.</h3>
+          <p>Every common method, params that stay in sync with the URL, headers, auth and bodies. Responses come back pretty-printed and highlighted, with status, time and size at a glance.</p>
+          <ul class="checks">
+            <li><svg class="i"><use href="#i-check"/></svg>JSON, form-data, urlencoded, binary and GraphQL bodies</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Basic, Bearer, API key and OAuth 2.0 token auth — inherited from folders</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Find in body, response headers, cookies and the exact request sent</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Paste a cURL command into the URL bar to import it</li>
+          </ul>
+        </div>
+        <figure class="showcase-shot"><img src="assets/img/main-light.png" alt="Fetchly showing a GET request with tests and a JSON response" loading="lazy" width="1440" height="900"></figure>
+      </div>
+
+      <div class="showcase reverse">
+        <div class="showcase-text">
+          <span class="tag"><svg class="i"><use href="#i-play"/></svg>Collection runner</span>
+          <h3>Run whole collections, with tests.</h3>
+          <p>Write pre-request and test scripts with a familiar <code>pm</code> API, then run a collection or folder and watch every request and assertion stream in live.</p>
+          <ul class="checks">
+            <li><svg class="i"><use href="#i-check"/></svg>Iterations, delays and stop-on-failure</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Chain requests by saving values to variables</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Export results as JSON — and no monthly run limits</li>
+          </ul>
+        </div>
+        <figure class="showcase-shot"><img src="assets/img/runner.png" alt="The collection runner showing passing tests for eight requests" loading="lazy" width="1440" height="900"></figure>
+      </div>
+
+      <div class="showcase">
+        <div class="showcase-text">
+          <span class="tag"><svg class="i"><use href="#i-cookie"/></svg>Cookie manager</span>
+          <h3>Cookies that just work.</h3>
+          <p>One shared cookie jar for every request — including cookies set during redirects. Browse them by domain, edit values and expiry, or clear them in a click.</p>
+          <ul class="checks">
+            <li><svg class="i"><use href="#i-check"/></svg>Domain, path, expiry, Secure and HttpOnly rules</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Add and edit cookies by hand</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Saved with your workspace</li>
+          </ul>
+        </div>
+        <figure class="showcase-shot"><img src="assets/img/cookies.png" alt="The cookie manager listing a session cookie for httpbin.org" loading="lazy" width="1440" height="900"></figure>
+      </div>
+
+      <div class="showcase reverse">
+        <div class="showcase-text">
+          <span class="tag"><svg class="i"><use href="#i-folder"/></svg>Collections</span>
+          <h3>Organise with drag &amp; drop.</h3>
+          <p>Group requests into collections and nested folders. Drag to reorder, move into folders or across collections. Right-click for everything else.</p>
+          <ul class="checks">
+            <li><svg class="i"><use href="#i-check"/></svg>Collection and folder auth, scripts and variables</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Environments, globals and <code>{{variables}}</code> — highlighted when undefined</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Search across names and URLs</li>
+          </ul>
+        </div>
+        <figure class="showcase-shot narrow"><img src="assets/img/sidebar-menu.png" alt="The sidebar with a folder's actions menu open" loading="lazy" width="720" height="520"></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== FEATURE GRID -->
+  <section class="section alt">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">And more</span>
+        <h2>Small app. Big feature list.</h2>
+      </div>
+      <div class="grid">
+        <div class="card"><svg class="i"><use href="#i-layers"/></svg><h4>Environments &amp; variables</h4><p>Local, environment, collection and global scopes, plus dynamic values like <code>{{$guid}}</code> and <code>{{$timestamp}}</code>.</p></div>
+        <div class="card"><svg class="i"><use href="#i-flask"/></svg><h4>Scripts &amp; tests</h4><p>Pre-request and test scripts at every level, with snippets and a built-in reference. Sandboxed, so a bad loop can't freeze the app.</p></div>
+        <div class="card"><svg class="i"><use href="#i-code"/></svg><h4>Code generation</h4><p>cURL, Python, JavaScript fetch, Node axios, Rust, Go, raw HTTP, HTTPie and PowerShell.</p></div>
+        <div class="card"><svg class="i"><use href="#i-import"/></svg><h4>Postman import &amp; export</h4><p>Bring collections (v2.0 / v2.1) and environments in — and take them back out any time.</p></div>
+        <div class="card"><svg class="i"><use href="#i-braces"/></svg><h4>GraphQL</h4><p>Query and variables editors with highlighting, sent as a standard GraphQL request.</p></div>
+        <div class="card"><svg class="i"><use href="#i-history"/></svg><h4>History</h4><p>Every request you send, grouped by day. Reopen any of them in a tab.</p></div>
+        <div class="card"><svg class="i"><use href="#i-terminal"/></svg><h4>Console</h4><p>Request and response details, script logs and errors in one place.</p></div>
+        <div class="card"><svg class="i"><use href="#i-moon"/></svg><h4>Light &amp; dark</h4><p>Follows your system theme, with an adjustable interface scale and resizable panes.</p></div>
+        <div class="card"><svg class="i"><use href="#i-server"/></svg><h4>Self-hosted web</h4><p>Run the same app in your browser with a tiny relay server — or a single Docker container.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== COMPARISON -->
+  <section class="section" id="compare">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Fetchly vs Postman</span>
+        <h2>Why developers choose Fetchly</h2>
+        <p>Postman is a full API platform. Fetchly focuses on being an excellent, private, local API client — and it reads and writes Postman's files, so you can move work in either direction.</p>
+      </div>
+      <div class="table-wrap">
+        <table class="compare">
+          <thead><tr><th></th><th class="us"><img src="assets/img/mark-128.png" alt="" width="20" height="20">Fetchly</th><th>Postman</th></tr></thead>
+          <tbody>
+            <tr><td>Account required</td><td class="us yes">No</td><td>Sign-in needed for most features</td></tr>
+            <tr><td>Where your data lives</td><td class="us yes">Your machine, in one local file</td><td>Synced to Postman's cloud</td></tr>
+            <tr><td>Works fully offline</td><td class="us yes">Yes</td><td>Limited</td></tr>
+            <tr><td>Source code</td><td class="us yes">Open source (MIT)</td><td>Proprietary</td></tr>
+            <tr><td>Desktop technology</td><td class="us yes">Native Rust + system webview</td><td>Electron (bundles Chromium)</td></tr>
+            <tr><td>Installer size</td><td class="us yes">~15 MB macOS · ~5 MB Windows</td><td>Much larger</td></tr>
+            <tr><td>Collection runner limits</td><td class="us yes">None</td><td>Depends on plan</td></tr>
+            <tr><td>Self-hosted web version</td><td class="us yes">Yes</td><td>Hosted by Postman</td></tr>
+            <tr><td>Requests, auth, bodies, environments, scripts, runner, cookies</td><td class="us yes">Yes</td><td>Yes</td></tr>
+            <tr><td>Team workspaces, mock servers, monitors</td><td class="us no">Not yet</td><td>Yes</td></tr>
+            <tr><td>WebSocket, gRPC, MQTT</td><td class="us no">Not yet</td><td>Yes</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="fineprint">Postman is a trademark of Postman, Inc. Fetchly is an independent project and is not affiliated with or endorsed by Postman.</p>
+    </div>
+  </section>
+
+  <!-- ======================================================== DOWNLOAD -->
+  <section class="section alt" id="download">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Download</span>
+        <h2>Get Fetchly — free</h2>
+        <p><span data-version>The latest release</span> for every platform. <a href="https://github.com/lycanbhat/Fetchly/releases" target="_blank" rel="noopener">All releases</a> · <a href="#" data-sums target="_blank" rel="noopener">SHA-256 checksums</a></p>
+      </div>
+
+      <div class="downloads">
+        <article class="dl" data-os="mac">
+          <div class="dl-head"><svg class="i"><use href="#i-apple"/></svg><div><h3>macOS</h3><span>macOS 11+ · Apple Silicon &amp; Intel</span></div><span class="you">Your system</span></div>
+          <a class="btn primary block" data-asset="macos-universal.dmg" href="https://github.com/lycanbhat/Fetchly/releases/latest"><svg class="i"><use href="#i-download"/></svg>Download .dmg<span class="size"></span></a>
+          <p class="note">Open the .dmg and drag Fetchly to Applications. First launch: right-click → <b>Open</b>.</p>
+        </article>
+
+        <article class="dl" data-os="windows">
+          <div class="dl-head"><svg class="i"><use href="#i-monitor"/></svg><div><h3>Windows</h3><span>Windows 10 / 11 · x64</span></div><span class="you">Your system</span></div>
+          <a class="btn primary block" data-asset="windows-x64-setup.exe" href="https://github.com/lycanbhat/Fetchly/releases/latest"><svg class="i"><use href="#i-download"/></svg>Download installer<span class="size"></span></a>
+          <a class="btn ghost block" data-asset="windows-x64-portable.zip" href="https://github.com/lycanbhat/Fetchly/releases/latest">Portable .zip<span class="size"></span></a>
+          <p class="note">No admin rights needed. If SmartScreen appears: <b>More info → Run anyway</b>.</p>
+        </article>
+
+        <article class="dl" data-os="linux">
+          <div class="dl-head"><svg class="i"><use href="#i-terminal"/></svg><div><h3>Linux</h3><span>x86_64 · WebKitGTK 4.1</span></div><span class="you">Your system</span></div>
+          <a class="btn primary block" data-asset="_amd64.deb" href="https://github.com/lycanbhat/Fetchly/releases/latest"><svg class="i"><use href="#i-download"/></svg>Debian / Ubuntu .deb<span class="size"></span></a>
+          <a class="btn ghost block" data-asset="linux-x86_64.tar.gz" href="https://github.com/lycanbhat/Fetchly/releases/latest">Other distros .tar.gz<span class="size"></span></a>
+          <p class="note"><code>sudo apt install ./fetchly_*.deb</code>, or extract the archive and run <code>./install.sh</code>.</p>
+        </article>
+
+        <article class="dl" data-os="web">
+          <div class="dl-head"><svg class="i"><use href="#i-globe"/></svg><div><h3>Web</h3><span>Self-hosted · any modern browser</span></div></div>
+          <a class="btn ghost block" href="https://github.com/lycanbhat/Fetchly#web" target="_blank" rel="noopener"><svg class="i"><use href="#i-server"/></svg>Self-hosting guide</a>
+          <pre class="snippet"><code>docker build -t fetchly .
+docker run -p 8080:8080 fetchly</code></pre>
+          <p class="note">Runs the same app in your browser, with a small relay that handles CORS for you.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== MOVE FROM POSTMAN -->
+  <section class="section">
+    <div class="wrap split">
+      <div>
+        <span class="eyebrow">Switching is easy</span>
+        <h2>Bring your Postman collections</h2>
+        <p class="muted">Export from Postman, click <b>Import</b> in Fetchly, done. Requests, folders, headers, bodies, auth, variables and environments come across. Your JavaScript test scripts are kept as comments, ready to port.</p>
+        <ol class="steps">
+          <li><span>1</span>In Postman: <b>Export</b> a collection (v2.1) and your environments.</li>
+          <li><span>2</span>In Fetchly: <b>Import</b> the files — or paste a cURL command.</li>
+          <li><span>3</span>Send. Your data now lives on your machine.</li>
+        </ol>
+      </div>
+      <div class="code-card">
+        <div class="code-head"><span></span><span></span><span></span><em>Tests</em></div>
+<pre><code><span class="c">// Familiar pm API, sandboxed Rhai scripts</span>
+pm.<span class="f">test</span>(<span class="s">"Status is 200"</span>, || pm.response.<span class="f">to_have_status</span>(<span class="n">200</span>));
+
+pm.<span class="f">test</span>(<span class="s">"Returns items"</span>, || {
+    <span class="k">let</span> data = pm.response.<span class="f">json</span>();
+    pm.<span class="f">expect</span>(data.items).<span class="f">to_have_length</span>(<span class="n">3</span>);
+});
+
+<span class="c">// Chain requests</span>
+pm.environment.<span class="f">set</span>(<span class="s">"token"</span>, pm.response.<span class="f">json</span>().token);</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================== BUILT WITH -->
+  <section class="section alt">
+    <div class="wrap split">
+      <div>
+        <span class="eyebrow">Open source</span>
+        <h2>Built in Rust. Yours to read, change and build.</h2>
+        <p class="muted">Fetchly is MIT-licensed. The engine — HTTP, cookies, scripting, import/export — is a platform-independent Rust library shared by the desktop apps and the web build.</p>
+        <div class="hero-actions left">
+          <a class="btn primary" href="https://github.com/lycanbhat/Fetchly" target="_blank" rel="noopener"><svg class="i"><use href="#i-github"/></svg>Star on GitHub</a>
+          <a class="btn ghost" href="https://github.com/lycanbhat/Fetchly#build-from-source" target="_blank" rel="noopener">Build from source</a>
+        </div>
+      </div>
+      <ul class="stack">
+        <li><b>Rust</b><span>Fast, memory-safe core</span></li>
+        <li><b>Dioxus</b><span>One UI for desktop and web</span></li>
+        <li><b>reqwest</b><span>HTTP client with rustls</span></li>
+        <li><b>Rhai</b><span>Sandboxed scripting</span></li>
+        <li><b>Lucide</b><span>Icons</span></li>
+        <li><b>Geist</b><span>Typeface</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ======================================================== FAQ -->
+  <section class="section" id="faq">
+    <div class="wrap narrow-wrap">
+      <div class="section-head"><span class="eyebrow">FAQ</span><h2>Questions</h2></div>
+      <details><summary>Is Fetchly really free?</summary><p>Yes. Fetchly is open source under the MIT license, with no paid tiers, accounts or usage limits.</p></details>
+      <details><summary>Where is my data stored?</summary><p>In a single JSON file on your computer — for example <code>~/Library/Application Support/Fetchly/state.json</code> on macOS. On the web it lives in your browser's local storage. Nothing is sent anywhere except the requests you choose to send.</p></details>
+      <details><summary>Why does my OS warn me on first launch?</summary><p>The builds aren't code-signed yet. On macOS, right-click the app → <b>Open</b>. On Windows, choose <b>More info → Run anyway</b>. You only need to do this once.</p></details>
+      <details><summary>Can I import from Postman?</summary><p>Yes — Postman collections (v2.0 and v2.1), environments and cURL commands. You can also export back to Postman's format at any time.</p></details>
+      <details><summary>Do my Postman test scripts run in Fetchly?</summary><p>Fetchly scripts use Rhai, a JavaScript-like language, with a familiar <code>pm</code> API. Imported JavaScript is kept as comments so nothing breaks; most <code>pm.test</code> / <code>pm.expect</code> checks port almost line for line.</p></details>
+      <details><summary>Does the Windows app need anything extra?</summary><p>It uses Microsoft Edge WebView2, which is built into Windows 11 and most Windows 10 PCs. The installer offers the download if it's missing.</p></details>
+    </div>
+  </section>
+
+  <!-- ======================================================== CTA -->
+  <section class="cta">
+    <div class="glow g3"></div>
+    <div class="wrap cta-inner">
+      <img src="assets/img/icon-256.png" alt="" width="88" height="88">
+      <h2>Try Fetchly today</h2>
+      <p>Free, open source, and ready in seconds.</p>
+      <div class="hero-actions">
+        <a class="btn primary lg" id="cta-download" href="https://github.com/lycanbhat/Fetchly/releases/latest"><svg class="i"><use href="#i-download"/></svg><span>Download Fetchly</span></a>
+        <a class="btn ghost lg" href="https://github.com/lycanbhat/Fetchly" target="_blank" rel="noopener"><svg class="i"><use href="#i-github"/></svg>View on GitHub</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="brand"><img src="assets/img/mark-128.png" alt="" width="22" height="22"><span>Fetchly</span></div>
+    <p>Developed by <a href="https://akshaybhat.online" target="_blank" rel="noopener">Akshay Bhat</a> · <a href="https://github.com/lycanbhat/Fetchly/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a> · <a href="https://github.com/lycanbhat/Fetchly" target="_blank" rel="noopener">GitHub</a></p>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>
