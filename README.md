@@ -482,4 +482,4 @@ It's built with:
 - [Geist and Geist Mono](https://vercel.com/font) fonts (SIL Open Font License 1.1)
 - [reqwest](https://github.com/seanmonstar/reqwest), [Rhai](https://rhai.rs), [axum](https://github.com/tokio-rs/axum)
 
-Fetchly is licensed under **MIT OR Apache-2.0**, at your option.
+Fetchly is released under the [MIT License](LICENSE). Bundled third-party components keep their own licenses, listed above.
