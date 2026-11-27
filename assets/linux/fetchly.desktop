@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Fetchly
+GenericName=API Client
+Comment=A fast, private, open-source API client
+Exec=fetchly
+Icon=fetchly
+Terminal=false
+Categories=Development;Network;
+Keywords=api;rest;http;graphql;postman;
+StartupWMClass=fetchly
