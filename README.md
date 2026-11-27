@@ -10,6 +10,17 @@
 </p>
 
 <p align="center">
+  🌐 <a href="https://lycanbhat.github.io/Fetchly/"><b>lycanbhat.github.io/Fetchly</b></a>
+</p>
+
+<p align="center">
+  <a href="https://lycanbhat.github.io/Fetchly/"><b>Website</b></a> ·
+  <a href="https://github.com/lycanbhat/Fetchly/releases/latest"><b>Download</b></a> ·
+  <a href="#features"><b>Features</b></a> ·
+  <a href="#build-from-source"><b>Build from source</b></a>
+</p>
+
+<p align="center">
   Developed by <a href="https://akshaybhat.online">Akshay Bhat</a>
 </p>
 
