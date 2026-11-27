@@ -1,0 +1,38 @@
+[package]
+name = "fetchly"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Fetchly — a fast, cross-platform API client (desktop + web), built with Dioxus"
+
+[features]
+default = ["desktop"]
+desktop = ["dioxus/desktop"]
+web = ["dioxus/web"]
+
+[dependencies]
+fetchly-core.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+web-time.workspace = true
+dioxus = { version = "0.7.10" }
+dioxus-primitives = { git = "https://github.com/DioxusLabs/components", rev = "62220db4dadaf6c80153e0ed3a7801757d39b2c0" }
+lucide-dioxus = { version = "3.63", features = ["all-icons"] }
+rfd = "0.15"
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+tokio = { workspace = true }
+directories = "6"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
+gloo-timers = { version = "0.3", features = ["futures"] }
+web-sys = { version = "0.3", features = ["Window", "Document", "Element", "HtmlAnchorElement", "Blob", "Url", "Location", "Storage"] }
+js-sys = "0.3"
+
+[build-dependencies]
+base64 = "0.22"
+png = "0.18"
+embed-resource = "3"

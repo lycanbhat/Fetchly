@@ -1,0 +1,33 @@
+[workspace]
+resolver = "2"
+members = ["crates/core", "crates/app", "crates/server"]
+default-members = ["crates/app"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+[workspace.dependencies]
+fetchly-core = { path = "crates/core" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+base64 = "0.22"
+uuid = { version = "1", features = ["v4", "serde", "js"] }
+chrono = { version = "0.4", default-features = false, features = ["serde", "clock", "wasmbind", "std"] }
+web-time = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "sync", "time"] }
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+strip = true
+
+[profile.release.package."*"]
+opt-level = 3
+
+# Used by `dx build --platform web`. wasm-bindgen needs the custom sections that `strip` removes.
+[profile.wasm-release]
+inherits = "release"
+opt-level = "z"
+strip = false
